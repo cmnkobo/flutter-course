@@ -235,39 +235,46 @@ class _AdeBlogPageState extends State<AdeBlogPage> {
       child: Column(
         children: [
           //header
-          Container(
-            width: double.infinity,
-            height: 250,
-            //background image
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(
-                    "https://www.lindaikejisblog.com/photos/shares/thumbs/632cb2cdbdaa4.PNG"),
-                fit: BoxFit.cover,
-              ),
-            ),
+          InkWell(
+            onTap: () {
+              //goto detail page
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => AdeBlogDetail()));
+            },
             child: Container(
+              width: double.infinity,
+              height: 250,
+              //background image
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                begin: Alignment.bottomRight,
-                colors: [
-                  Colors.black.withOpacity(1),
-                  Colors.black.withOpacity(.0),
-                ],
-              )),
-              padding: EdgeInsets.all(15),
-              child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Text(
-                    "Atiku Abubakar's secretary, Abdullah Nyako is dead",
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 26,
-                        color: Colors.white,
-                        height: 1.2,
-                        fontWeight: FontWeight.w900),
-                  )),
+                image: DecorationImage(
+                  image: NetworkImage(
+                      "https://www.lindaikejisblog.com/photos/shares/thumbs/632cb2cdbdaa4.PNG"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                  begin: Alignment.bottomRight,
+                  colors: [
+                    Colors.black.withOpacity(1),
+                    Colors.black.withOpacity(.0),
+                  ],
+                )),
+                padding: EdgeInsets.all(15),
+                child: Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      "Atiku Abubakar's secretary, Abdullah Nyako is dead",
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 26,
+                          color: Colors.white,
+                          height: 1.2,
+                          fontWeight: FontWeight.w900),
+                    )),
+              ),
             ),
           ),
 
@@ -322,6 +329,309 @@ class _AdeCartPageState extends State<AdeCartPage> {
       ),
       body: Container(
         child: Text("I am cart Page"),
+      ),
+    );
+  }
+}
+
+//AdeBlogDetail
+
+class AdeBlogDetail extends StatefulWidget {
+  const AdeBlogDetail({Key? key}) : super(key: key);
+
+  @override
+  State<AdeBlogDetail> createState() => _AdeBlogDetailState();
+}
+
+class _AdeBlogDetailState extends State<AdeBlogDetail> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Atiku Abubakar's secretary, Abdullah Nyako is dead"),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              height: 250,
+              //background image
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                      "https://www.lindaikejisblog.com/photos/shares/thumbs/632cb2cdbdaa4.PNG"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: Container(
+                color: Colors.black.withOpacity(0.6),
+                padding: EdgeInsets.all(15),
+                child: Column(
+                  //set center
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Atiku Abubakar's secretary, Abdullah Nyako is dead",
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 26,
+                          color: Colors.white,
+                          height: 1.2,
+                          fontWeight: FontWeight.w900),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      //center
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          children: const [
+                            Icon(
+                              Icons.calendar_today,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "2021-09-10",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                  height: 1.2,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        ),
+                        //arthor
+                        Row(
+                          children: const [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Icon(
+                              Icons.person,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Linda Ikeji",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                  height: 1.2,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            //body detail
+            //social share
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: const [
+                      Icon(
+                        Icons.share,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Share",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                            height: 1.2,
+                            fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: const [
+                      Icon(
+                        Icons.comment_rounded,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      //comment section
+                      Text(
+                        "(2) Comments",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                            height: 1.2,
+                            fontWeight: FontWeight.normal),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            //divider
+            Divider(
+              height: 1,
+              color: Colors.grey,
+            ),
+            //content
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Text(
+                "Atiku Abubakar's secretary, Abdullah Nyako is dead. He died on Sunday, September 12, 2021. He was 60. Nyako was the secretary to the former Vice President of Nigeria, Atiku Abubakar. \n\nHe was also the former chairman of the Peoples Democratic Party (PDP) in Adamawa State. He died in Abuja after a brief illness. May his soul rest in peace, Amen. \n\nAtiku Abubakar's secretary, Abdullah Nyako is dead. He died on Sunday, September 12, 2021. He was 60. Nyako was the secretary to the former Vice President of Nigeria, Atiku Abubakar. \n\nHe was also the former chairman of the Peoples Democratic Party (PDP) in Adamawa State. He died in Abuja after a brief illness. May his soul rest in peace, Amen.",
+                style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black,
+                    height: 1.2,
+                    fontWeight: FontWeight.normal),
+              ),
+            ),
+            //recent comments
+            Container(
+              padding: EdgeInsets.all(15),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: const [
+                        Text(
+                          "Recent Comments",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              height: 1.2,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        //add new comment icon
+                        Spacer(),
+                        //icon with text
+                        Icon(
+                          Icons.add_comment,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Add New Comment",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                              height: 1.2,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    //comment
+                    Container(
+                      padding: EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                //add icon
+                                child: Icon(
+                                  Icons.person,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    "Linda Ikeji",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        height: 1.2,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "2021-09-10",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                        height: 1.2,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            "Mr Abdullah Nyako was a good man for the day of the years that were the most important of the world. He was a great man.",
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                                height: 1.2,
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    //load more
+                    Row(
+                      //center
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        Text(
+                          "Load More",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                              height: 1.2,
+                              fontWeight: FontWeight.normal),
+                        ),
+                        Icon(
+                          Icons.arrow_drop_down,
+                          color: Colors.grey,
+                        ),
+                      ],
+                    ),
+                  ]),
+            )
+          ],
+        ),
       ),
     );
   }
