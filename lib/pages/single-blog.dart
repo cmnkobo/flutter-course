@@ -291,7 +291,7 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                                       height: 1,
                                       fontWeight: FontWeight.normal),
                                 ),
-                              ]))
+                              ])),
                     ]))
           ],
         ),
