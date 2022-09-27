@@ -39,7 +39,8 @@ class _AdeBlogPageState extends State<AdeBlogPage> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AdeBlogDetail()));
+                            builder: (context) =>
+                                AdeBlogDetail(blogdetail: blogheader)));
                   },
                   child: Container(
                     width: double.infinity,
@@ -89,13 +90,23 @@ class _AdeBlogPageState extends State<AdeBlogPage> {
               ? Column(
                   children: [
                     for (var i = 0; i < blogbody.length; i++)
-                      AdeBlogList().getCard(
-                        date: blogbody[i]["date"],
-                        thumbnail: blogbody[i]["image"],
-                        title: blogbody[i]["title"],
-                        description: blogbody[i]["content"],
-                        author: blogbody[i]["author"],
-                        comments: blogbody[i]["comments"]?.length,
+                      InkWell(
+                        onTap: () {
+                          //goto blog detail
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      AdeBlogDetail(blogdetail: blogbody[i])));
+                        },
+                        child: AdeBlogList().getCard(
+                          date: blogbody[i]["date"],
+                          thumbnail: blogbody[i]["image"],
+                          title: blogbody[i]["title"],
+                          description: blogbody[i]["content"],
+                          author: blogbody[i]["author"],
+                          comments: blogbody[i]["comments"]?.length,
+                        ),
                       )
                   ],
                 )
@@ -118,9 +129,11 @@ class _AdeBlogPageState extends State<AdeBlogPage> {
       var response =
           await Dio().get('http://10.0.2.2:8888/php_beginner/api/get_posts');
       var data = response.data;
+      var firstindex = data[0];
+      var body = data.sublist(1);
       setState(() {
-        blogheader = data[0];
-        blogbody = data;
+        blogheader = firstindex;
+        blogbody = body;
       });
     } catch (e) {
       print(e);

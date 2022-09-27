@@ -9,11 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-void main() {
-  //runapp
-  runApp(const AdeEntryWidget());
-}
-
 //Entry Widget
 class AdeEntryWidget extends StatelessWidget {
   const AdeEntryWidget({Key? key}) : super(key: key);

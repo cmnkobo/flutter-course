@@ -49,17 +49,14 @@ class AdeBlogList {
                   ),
                   children: [
                     TextSpan(
-                        text: author,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black,
-                          height: 1.2,
-                          fontWeight: FontWeight.w900,
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            print("Linda Ikeji");
-                          }),
+                      text: author,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.black,
+                        height: 1.2,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
                     TextSpan(
                         text: " at $date",
                         style: TextStyle(

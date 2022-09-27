@@ -1,19 +1,69 @@
 //AdeBlogDetail
+// ignore_for_file: prefer_const_constructors, avoid_init_to_null
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class AdeBlogDetail extends StatefulWidget {
-  const AdeBlogDetail({Key? key}) : super(key: key);
+  final blogdetail;
+  const AdeBlogDetail({Key? key, this.blogdetail}) : super(key: key);
 
   @override
-  State<AdeBlogDetail> createState() => _AdeBlogDetailState();
+  State<AdeBlogDetail> createState() =>
+      // ignore: no_logic_in_create_state
+      _AdeBlogDetailState(blogdetail: blogdetail);
 }
 
 class _AdeBlogDetailState extends State<AdeBlogDetail> {
+  final blogdetail;
+  dynamic blogcontent = null;
+  dynamic blogcomment = null;
+//constructor
+  _AdeBlogDetailState({this.blogdetail});
+
+  //oninit
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getBlogContent();
+    getBlogComment();
+  }
+
+  //getBlogContent
+  getBlogContent() async {
+    try {
+      var response = await Dio().get(
+          'http://10.0.2.2:8888/php_beginner/api/get_post/${blogdetail["post_id"]}');
+      var data = response.data;
+      setState(() {
+        blogcontent = data["content"];
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  //getBlogComment
+  getBlogComment() async {
+    try {
+      var response = await Dio().get(
+          'http://10.0.2.2:8888/php_beginner/api/get_comments/${blogdetail["post_id"]}');
+      var data = response.data;
+      print(data);
+      setState(() {
+        blogcomment = data;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Atiku Abubakar's secretary, Abdullah Nyako is dead"),
+        title: Text(blogdetail["title"]),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -22,10 +72,9 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
               width: double.infinity,
               height: 250,
               //background
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(
-                      "https://www.lindaikejisblog.com/photos/shares/thumbs/632cb2cdbdaa4.PNG"),
+                  image: NetworkImage(blogdetail["image"]),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -36,12 +85,12 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text(
-                      "Atiku Abubakar's secretary, Abdullah Nyako is dead",
+                    Text(
+                      blogdetail["title"],
                       textAlign: TextAlign.center,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontSize: 26,
                           height: 1.2,
@@ -58,18 +107,18 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Icons.calendar_today,
                               color: Colors.white,
                               size: 14,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Text(
-                              "2021-09-10",
-                              style: TextStyle(
+                              blogdetail["date"],
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
                                   height: 1.2,
@@ -81,7 +130,7 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
+                          children: [
                             SizedBox(
                               width: 10,
                             ),
@@ -94,7 +143,7 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                               width: 5,
                             ),
                             Text(
-                              "Linda Ikeji",
+                              blogdetail["author"],
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 14,
@@ -141,7 +190,7 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(
                         Icons.comment,
                         color: Colors.black,
@@ -151,7 +200,7 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                         width: 5,
                       ),
                       Text(
-                        "(2) Comments",
+                        "(${blogcomment != null ? blogcomment.length : '--'}) Comments",
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 16,
@@ -171,14 +220,23 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
             //content
             Container(
                 padding: EdgeInsets.all(15),
-                child: const Text(
-                  "Atiku Abubakar's secretary, Abdullah Nyako is dead. He died on Sunday, September 12, 2021, at the age of 60. He was the secretary to the former vice president of Nigeria, Atiku Abubakar. He was also the former governor of Adamawa state. He died in a hospital in Abuja after a brief illness. May his soul rest in peace, Amen.\n\nAtiku Abubakar's secretary, Abdullah Nyako is dead. He died on Sunday, September 12, 2021, at the age of 60. He was the secretary to the former vice president of Nigeria, Atiku Abubakar. He was also the former governor of Adamawa state. He died in a hospital in Abuja after a brief illness. May his soul rest in peace, Amen.\n\nAtiku Abubakar's secretary, Abdullah Nyako is dead. He died on Sunday, September 12, 2021, at the age of 60. He was the secretary to the former vice president of Nigeria, Atiku Abubakar. He was also the former governor of Adamawa state. He died in a hospital in Abuja after a brief illness. May his soul rest in peace, Amen.",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14,
-                      height: 1.2,
-                      fontWeight: FontWeight.normal),
-                )),
+                child: blogcontent != null
+                    ? Text(
+                        blogcontent,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            height: 1.2,
+                            fontWeight: FontWeight.normal),
+                      )
+                    : Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(50.0),
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
+                        ),
+                      )),
             //recent comments
             Container(
                 padding: EdgeInsets.all(15),
@@ -225,73 +283,175 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                         height: 10,
                       ),
                       //comment
-                      Container(
-                          padding: EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.withOpacity(.2),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      blogcomment != null
+                          ? Column(
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        image: DecorationImage(
-                                          image: NetworkImage(
-                                              "https://www.lindaikejisblog.com/photos/shares/thumbs/632cb2cdbdaa4.PNG"),
-                                          fit: BoxFit.cover,
+                                blogcomment.length > 0
+                                    ? Container(
+                                        padding: EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(.2),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Container(
+                                                    width: 40,
+                                                    height: 40,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: CircleAvatar(
+                                                      backgroundColor:
+                                                          Colors.black,
+                                                      child: Icon(
+                                                        Icons.person,
+                                                        color: Colors.white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        blogcomment[0]["user"],
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 14,
+                                                            height: 1.2,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                      Text(
+                                                        blogcomment[0]["date"],
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 14,
+                                                            height: 1.2,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                blogcomment[0]["comment"],
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 14,
+                                                    height: 1,
+                                                    fontWeight:
+                                                        FontWeight.normal),
+                                              ),
+                                            ]))
+                                    : Center(
+                                        child: Column(
+                                          children: [
+                                            Divider(
+                                              height: 1,
+                                              color: Colors.grey,
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    child: const Text(
+                                                      "No comments yet",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          height: 1,
+                                                          fontWeight: FontWeight
+                                                              .normal),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 8,
+                                                  ),
+                                                  Container(
+                                                    child: const Text(
+                                                      "Be the first to comment",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 14,
+                                                          height: 1,
+                                                          fontWeight: FontWeight
+                                                              .normal),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Divider(
+                                              height: 1,
+                                              color: Colors.grey,
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: const [
-                                        Text(
-                                          "Linda Ikeji",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                              height: 1.2,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        Text(
-                                          "2021-09-10",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 14,
-                                              height: 1.2,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                              ],
+                            )
+                          : Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(50.0),
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                const Text(
-                                  "Atiku Abubakar's secretary, Abdullah Nyako is dead. He died on Sunday, September 12, 2021, at the age of 60. He was the secretary to the former vice president of Nigeria.",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 14,
-                                      height: 1,
-                                      fontWeight: FontWeight.normal),
-                                ),
-                              ])),
+                              ),
+                            ),
+                      //load more
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: const [
+                          Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.black,
+                            size: 20,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            "Load More",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 11,
+                                height: 1.2,
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ],
+                      ),
                     ]))
           ],
         ),
