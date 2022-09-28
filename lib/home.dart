@@ -2,12 +2,14 @@
 
 import 'package:ecommerce/pages/cart.dart';
 import 'package:ecommerce/pages/home-data/news-card.dart';
+import 'package:ecommerce/pages/search.dart';
 import 'package:ecommerce/pages/shop.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:share_plus/share_plus.dart';
 
 //Entry Widget
 class AdeEntryWidget extends StatelessWidget {
@@ -57,13 +59,22 @@ class _AdeHomePageState extends State<AdeHomePage> {
           IconButton(
             icon: Icon(Icons.share),
             onPressed: () {
-              print("Share");
+              //share app
+              Share.share(
+                  "https://play.google.com/store/apps/details?id=com.ade.newsapp",
+                  subject: "News App");
             },
           ),
           IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              print("Search");
+              //navigate to search 'AdeSearchPage
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AdeSearchPage(),
+                ),
+              );
             },
           ),
           SizedBox(

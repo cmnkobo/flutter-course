@@ -2,7 +2,11 @@
 // ignore_for_file: prefer_const_constructors, avoid_init_to_null
 
 import 'package:dio/dio.dart';
+import 'package:ecommerce/pages/adelogin.dart';
+import 'package:ecommerce/pages/comments.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AdeBlogDetail extends StatefulWidget {
   final blogdetail;
@@ -30,6 +34,18 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
     getBlogComment();
   }
 
+  //check if user is logged in
+  isUserloggedIn() async {
+    // Obtain shared preferences.
+    final prefs = await SharedPreferences.getInstance();
+    var user_detail = prefs.getString('userdetail');
+    if (user_detail == null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   //getBlogContent
   getBlogContent() async {
     try {
@@ -50,7 +66,7 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
       var response = await Dio().get(
           'http://10.0.2.2:8888/php_beginner/api/get_comments/${blogdetail["post_id"]}');
       var data = response.data;
-      print(data);
+      // print(data);
       setState(() {
         blogcomment = data;
       });
@@ -165,27 +181,33 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.share,
-                        color: Colors.black,
-                        size: 20,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        "Share",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            height: 1.2,
-                            fontWeight: FontWeight.normal),
-                      ),
-                    ],
+                  InkWell(
+                    onTap: () {
+                      Share.share(
+                          '${blogdetail["title"]} ${blogdetail["link"]}');
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.share,
+                          color: Colors.black,
+                          size: 20,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Share",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              height: 1.2,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ],
+                    ),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -199,13 +221,35 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                       SizedBox(
                         width: 5,
                       ),
-                      Text(
-                        "(${blogcomment != null ? blogcomment.length : '--'}) Comments",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            height: 1.2,
-                            fontWeight: FontWeight.normal),
+                      InkWell(
+                        onTap: () {
+                          isUserloggedIn().then((value) {
+                            if (value) {
+                              //goto comment page
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AdeBlogComment(
+                                            commentArray: blogcomment,
+                                            postId: blogdetail["post_id"],
+                                          )));
+                            } else {
+                              //goto login page
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AdeloginPage()));
+                            }
+                          });
+                        },
+                        child: Text(
+                          "(${blogcomment != null ? blogcomment.length : '--'}) Comments",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              height: 1.2,
+                              fontWeight: FontWeight.normal),
+                        ),
                       ),
                     ],
                   ),
@@ -257,25 +301,48 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                           ),
                           //icon to add comment
                           const Spacer(),
-                          Row(
-                            children: const [
-                              Icon(
-                                Icons.add_comment,
-                                color: Colors.black,
-                                size: 20,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Add Comment",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    height: 1.2,
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ],
+                          InkWell(
+                            onTap: () {
+                              isUserloggedIn().then((value) {
+                                if (value) {
+                                  //goto comment page
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AdeBlogComment(
+                                                commentArray: blogcomment,
+                                                postId: blogdetail["post_id"],
+                                              )));
+                                } else {
+                                  //goto login page
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AdeloginPage()));
+                                }
+                              });
+                            },
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.add_comment,
+                                  color: Colors.black,
+                                  size: 20,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Add Comment",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      height: 1.2,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ],
+                            ),
                           )
                         ],
                       ),
@@ -433,7 +500,7 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(
                             Icons.arrow_drop_down,
                             color: Colors.black,
@@ -442,13 +509,36 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
                           SizedBox(
                             width: 5,
                           ),
-                          Text(
-                            "Load More",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 11,
-                                height: 1.2,
-                                fontWeight: FontWeight.normal),
+                          InkWell(
+                            onTap: () {
+                              isUserloggedIn().then((value) {
+                                if (value) {
+                                  //goto comment page
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => AdeBlogComment(
+                                                commentArray: blogcomment,
+                                                postId: blogdetail["post_id"],
+                                              )));
+                                } else {
+                                  //goto login page
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              AdeloginPage()));
+                                }
+                              });
+                            },
+                            child: Text(
+                              "Load More",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 11,
+                                  height: 1.2,
+                                  fontWeight: FontWeight.normal),
+                            ),
                           ),
                         ],
                       ),
