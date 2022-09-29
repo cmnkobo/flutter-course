@@ -20,6 +20,14 @@ class _AdeSearchPageState extends State<AdeSearchPage> {
 
   dynamic searchResult = [];
 
+  //oninit
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    searchPost("");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
