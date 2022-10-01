@@ -177,9 +177,11 @@ class _AdeProductDetailState extends State<AdeProductDetail> {
                   onTap: () async {
                     AdeCartFunction()
                         .addToCart(product: product, quantity: quantity);
-                    //get cart
-                    var res = await AdeCartFunction().getCart();
-                    print(res[0]["product_id"]);
+                    //show snackbar
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Added to cart"),
+                      duration: Duration(seconds: 2),
+                    ));
                   },
                   child: Container(
                     width: double.infinity,
