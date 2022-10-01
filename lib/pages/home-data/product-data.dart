@@ -1,16 +1,22 @@
 import 'package:ecommerce/pages/shop-single.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AdeProductCard {
-  Widget getCard(context) {
+  var formatter = NumberFormat("#,###,000");
+  Widget getCard(context, products) {
     return Wrap(
       children: [
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < products.length; i++)
           InkWell(
             onTap: () {
               //goto product detail
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AdeShopSingle()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AdeProductDetail(
+                            product: products[i],
+                          )));
             },
             child: Padding(
               padding: const EdgeInsets.fromLTRB(5.0, 0, 5, 7),
@@ -24,11 +30,8 @@ class AdeProductCard {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Image.network(
-                          "https://www.adeleyeayodeji.com/img/IMG_20200522_121756_834_2.jpg",
-                          width: 180,
-                          height: 150,
-                          fit: BoxFit.cover),
+                      Image.network(products[i]["image"],
+                          width: 180, height: 150, fit: BoxFit.cover),
                       //category
                       Container(
                           padding: EdgeInsets.all(5),
@@ -36,12 +39,12 @@ class AdeProductCard {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Men Fashion",
+                                products[i]["category"],
                                 style:
                                     TextStyle(fontSize: 11, color: Colors.grey),
                               ),
                               Text(
-                                "Long Sleeve t shirts",
+                                products[i]["title"],
                                 maxLines: 1,
                                 style: TextStyle(
                                     fontSize: 15,
@@ -54,7 +57,7 @@ class AdeProductCard {
                               Row(
                                 children: [
                                   Text(
-                                    "#5,000",
+                                    "₦${formatter.format(int.parse(products[i]["price"]))}",
                                     style: TextStyle(
                                         fontSize: 15,
                                         color: Colors.red,
