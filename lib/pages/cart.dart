@@ -266,7 +266,9 @@ class _AdeCartPageState extends State<AdeCartPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AdeCheckoutPage()));
+                                  builder: (context) => AdeCheckout(
+                                        totalAmount: getTotal(),
+                                      )));
                         }
                       },
                       child: Container(
