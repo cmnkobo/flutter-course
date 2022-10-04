@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:ecommerce/pages/home-data/product-data.dart';
 import 'package:ecommerce/pages/home-data/slider.dart';
+import 'package:ecommerce/pages/service/api.dart';
 import 'package:flutter/material.dart';
 
 class AdeEcommerce extends StatefulWidget {
@@ -28,8 +29,7 @@ class _AdeEcommerceState extends State<AdeEcommerce> {
   //get products
   getProducts() async {
     var dio = Dio();
-    var response =
-        await dio.get("http://10.0.2.2:8888/php_beginner/api/get_products");
+    var response = await dio.get("${AdeAPI().baseurl}api/get_products");
     //pick two products productsHeader
     var productsHeader1 = response.data.sublist(0, 2);
     //pick the rest of the products and take out first two

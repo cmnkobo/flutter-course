@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:comment_box/comment/comment.dart';
 import 'package:dio/dio.dart';
+import 'package:ecommerce/pages/service/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -122,9 +123,8 @@ class _AdeBlogCommentState extends State<AdeBlogComment> {
     var formData = FormData.fromMap(data);
 
     //send data to server
-    var response = await dio.post(
-        "http://10.0.2.2:8888/php_beginner/api/add_comment",
-        data: formData);
+    var response =
+        await dio.post("${AdeAPI().baseurl}api/add_comment", data: formData);
     if (response.data["code"] == 200) {
       //snackbar
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

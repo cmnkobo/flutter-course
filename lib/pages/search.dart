@@ -2,6 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:ecommerce/pages/home-data/news-card-list.dart';
+import 'package:ecommerce/pages/service/api.dart';
 import 'package:ecommerce/pages/single-blog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -134,8 +135,8 @@ class _AdeSearchPageState extends State<AdeSearchPage> {
     //convert to form
     var formData = FormData.fromMap(data);
     //make request
-    var response = await dio
-        .post("http://10.0.2.2:8888/php_beginner/api/search", data: formData);
+    var response =
+        await dio.post("${AdeAPI().baseurl}api/search", data: formData);
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     //check if the response is true
     if (response.data["code"] == 200) {
