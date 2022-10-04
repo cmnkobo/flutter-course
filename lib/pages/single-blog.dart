@@ -4,6 +4,7 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerce/pages/adelogin.dart';
 import 'package:ecommerce/pages/comments.dart';
+import 'package:ecommerce/pages/service/api.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -49,8 +50,8 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
   //getBlogContent
   getBlogContent() async {
     try {
-      var response = await Dio().get(
-          'http://10.0.2.2:8888/php_beginner/api/get_post/${blogdetail["post_id"]}');
+      var response = await Dio()
+          .get('${AdeAPI().baseurl}api/get_post/${blogdetail["post_id"]}');
       var data = response.data;
       setState(() {
         blogcontent = data["content"];
@@ -63,8 +64,8 @@ class _AdeBlogDetailState extends State<AdeBlogDetail> {
   //getBlogComment
   getBlogComment() async {
     try {
-      var response = await Dio().get(
-          'http://10.0.2.2:8888/php_beginner/api/get_comments/${blogdetail["post_id"]}');
+      var response = await Dio()
+          .get('${AdeAPI().baseurl}api/get_comments/${blogdetail["post_id"]}');
       var data = response.data;
       // print(data);
       setState(() {

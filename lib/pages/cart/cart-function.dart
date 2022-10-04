@@ -79,13 +79,13 @@ class AdeCartFunction {
       //save cart
       prefs.setString("cart", jsonEncode(decodedCart));
     }
+  }
 
-    //clear all cart
-    clearCart() async {
-      //shared preference
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      //empty cart
-      prefs.setString("cart", jsonEncode([]));
-    }
+  //clear all cart
+  clearCart() async {
+    //shared preference
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    //empty cart
+    prefs.setString("cart", jsonEncode([]));
   }
 }

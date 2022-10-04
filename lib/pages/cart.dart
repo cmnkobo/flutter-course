@@ -297,19 +297,41 @@ class _AdeCartPageState extends State<AdeCartPage> {
                   padding: const EdgeInsets.all(50.0),
                   child: Column(
                     children: [
-                      CircularProgressIndicator(
-                        color: Colors.black,
-                      ),
+                      Icon(Icons.shopping_bag_outlined,
+                          size: 100, color: Colors.grey),
                       SizedBox(
                         height: 20,
                       ),
                       Text(
-                        "Loading Cart...",
+                        "Your cart is empty",
                         style: TextStyle(
                             color: Colors.black,
-                            fontSize: 10,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold),
-                      )
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          //close cart
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(5),
+                          //background color
+                          decoration: BoxDecoration(
+                              color: Colors.orange,
+                              borderRadius: BorderRadius.circular(2)),
+                          child: Text(
+                            "Go to shop",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

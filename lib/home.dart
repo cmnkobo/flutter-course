@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:ecommerce/pages/adeorderpage.dart';
 import 'package:ecommerce/pages/cart.dart';
 import 'package:ecommerce/pages/home-data/news-card.dart';
 import 'package:ecommerce/pages/search.dart';
@@ -92,36 +93,45 @@ class _AdeHomePageState extends State<AdeHomePage> {
       bottomNavigationBar: BottomNavigationBar(
           currentIndex: pageIndex,
           onTap: (index) {
-            //if index is 2 goto page
-            if (index == 2) {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AdeCartPage()));
-            } else {
-              //rebuild ui
-              setState(() {
-                pageIndex = index;
-                //update title
-                if (index == 0) {
-                  apptitle = "News App";
-                } else {
-                  apptitle = "Ecommerce";
-                }
-              });
+            switch (index) {
+              case 2:
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AdeCartPage()));
+                break;
+              case 3:
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AdeOrderPage()));
+                break;
+              default:
+                //rebuild ui
+                setState(() {
+                  pageIndex = index;
+                  //update title
+                  if (index == 0) {
+                    apptitle = "News App";
+                  } else {
+                    apptitle = "Ecommerce";
+                  }
+                });
             }
           },
           selectedItemColor: Colors.red,
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.home, color: Colors.black),
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_bag),
+              icon: Icon(Icons.shopping_bag, color: Colors.black),
               label: "Ecommerce",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined),
+              icon: Icon(Icons.shopping_cart_outlined, color: Colors.black),
               label: "Cart",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_bag_outlined, color: Colors.black),
+              label: "Order",
             ),
           ]),
     );

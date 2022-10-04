@@ -2,6 +2,7 @@
 // ignore_for_file: avoid_init_to_null
 
 import 'package:dio/dio.dart';
+import 'package:ecommerce/pages/service/api.dart';
 import 'package:ecommerce/pages/single-blog.dart';
 import 'package:flutter/material.dart';
 
@@ -126,8 +127,7 @@ class _AdeBlogPageState extends State<AdeBlogPage> {
   //get_posts
   void getBlog() async {
     try {
-      var response =
-          await Dio().get('http://10.0.2.2:8888/php_beginner/api/get_posts');
+      var response = await Dio().get('${AdeAPI().baseurl}api/get_posts');
       var data = response.data;
       var firstindex = data[0];
       var body = data.sublist(1);

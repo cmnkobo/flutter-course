@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:ecommerce/pages/service/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -124,9 +125,8 @@ class _AdeloginPageState extends State<AdeloginPage> {
     //use formdata to send data
     var formData = FormData.fromMap(data);
     //post request
-    var response = await dio.post(
-        "http://10.0.2.2:8888/php_beginner/api/user_login",
-        data: formData);
+    var response =
+        await dio.post("${AdeAPI().baseurl}api/user_login", data: formData);
     //check if response is successful
     if (response.data["code"] == 200) {
       //shared preferences
