@@ -1,11 +1,12 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:ecommerce/pages/shop-single.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AdeProductSlider {
   var formatter = NumberFormat("#,###,000");
-  Widget getProductSlider({height, products}) {
+  Widget getProductSlider({height, products, context}) {
     return Container(
         child: CarouselSlider(
       items: [
@@ -13,6 +14,13 @@ class AdeProductSlider {
           InkWell(
             onTap: () {
               //navigate to product details
+              //goto product detail
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AdeProductDetail(
+                            product: products[i],
+                          )));
             },
             child: Container(
               width: double.infinity,

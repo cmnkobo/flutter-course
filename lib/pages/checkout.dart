@@ -280,7 +280,7 @@ class _AdeCheckoutState extends State<AdeCheckout> {
     var total = await getTotal();
     Charge charge = Charge()
       ..amount = total * 100
-      ..reference = "ecommerceapp-${DateTime.now().millisecondsSinceEpoch}"
+      ..reference = "${DateTime.now().millisecondsSinceEpoch}"
       // or ..accessCode = _getAccessCodeFrmInitialization()
       ..email = "${userdetaildecoded["user_details"]["email"]}";
     CheckoutResponse response = await plugin.checkout(

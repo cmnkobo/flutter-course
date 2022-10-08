@@ -51,7 +51,9 @@ class _AdeEcommerceState extends State<AdeEcommerce> {
             ? Column(
                 children: [
                   AdeProductSlider().getProductSlider(
-                      height: height, products: productsHeader),
+                      height: height,
+                      products: productsHeader,
+                      context: context),
                   Divider(
                     color: Colors.grey[300],
                     thickness: 1,

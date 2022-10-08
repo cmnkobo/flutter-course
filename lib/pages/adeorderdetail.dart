@@ -36,14 +36,16 @@ class _AdeOrderDetailState extends State<AdeOrderDetail> {
     //get order detail
     var dio = Dio();
     var user = await userData();
-    //send data to server
-    var response = await dio.get(
-      "${AdeAPI().baseurl}order-api-single/get_order_by_id/${user["id"]}/${order["order_id"]}",
-    );
-    //set
-    setState(() {
-      products = response.data["products"];
-    });
+    if (user != null) {
+      //send data to server
+      var response = await dio.get(
+        "${AdeAPI().baseurl}order-api-single/get_order_by_id/${user["id"]}/${order["order_id"]}",
+      );
+      //set
+      setState(() {
+        products = response.data["products"];
+      });
+    }
   }
 
   //userdata

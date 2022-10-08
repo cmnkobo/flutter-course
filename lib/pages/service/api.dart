@@ -10,5 +10,6 @@ class AdeAPI {
     } else {
       baseurl = "http://localhost:8888/php_beginner/";
     }
+    // baseurl = "http://php.aqskillonlinecourses.com/";
   }
 }

@@ -26,14 +26,16 @@ class _AdeOrderPageState extends State<AdeOrderPage> {
   getOrder() async {
     var dio = Dio();
     var user = await userData();
-    //send data to server
-    var response = await dio.get(
-      "${AdeAPI().baseurl}order-api/get_order/${user["id"]}",
-    );
-    //set
-    setState(() {
-      orders = response.data;
-    });
+    if (user != null) {
+      //send data to server
+      var response = await dio.get(
+        "${AdeAPI().baseurl}order-api/get_order/${user["id"]}",
+      );
+      //set
+      setState(() {
+        orders = response.data;
+      });
+    }
   }
 
   //userdata
