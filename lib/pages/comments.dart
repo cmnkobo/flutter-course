@@ -1,7 +1,6 @@
 // ignore_for_file: no_logic_in_create_state, use_build_context_synchronously
 
 import 'dart:convert';
-
 import 'package:comment_box/comment/comment.dart';
 import 'package:dio/dio.dart';
 import 'package:ecommerce/pages/service/api.dart';
@@ -39,7 +38,9 @@ class _AdeBlogCommentState extends State<AdeBlogComment> {
       ),
       body: Container(
         child: CommentBox(
-          userImage: "https://garverins.com/wp-content/uploads/user.png",
+          userImage: CommentBox.commentImageParser(
+              imageURLorPath:
+                  "https://garverins.com/wp-content/uploads/user.png"),
           labelText: 'Write a comment...',
           withBorder: true,
           errorText: 'Comment cannot be blank',
